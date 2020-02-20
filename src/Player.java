@@ -30,10 +30,27 @@ public class Player{
 
         }
     }
+    
 
     public String toString(){
         return new String(this.name + " is at " + this.x+","+this.y);
     }
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
 
 
 
