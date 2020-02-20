@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-
+//Shooting the bullet
+//Desmond and Muhammad
 public class Bullet {
 	private static final int WIDTH = 600;
 	private int bx;
@@ -7,6 +8,8 @@ public class Bullet {
 	private String space;
 	private ArrayList<Integer>bulletList;
 	
+	
+	//constructor
 	public Bullet(String space) {
 		this.space = space;
 		this.bulletList = new ArrayList<Integer>();
@@ -18,7 +21,8 @@ public class Bullet {
 	}
 	
 
-	
+	//updating the array, adding x and y for each bullet fired
+	//updating x and y depending on where the player is
 	public void shoot(String space, int bx, int by) {
 		ArrayList<Integer>bullets = new ArrayList<Integer>();
 
@@ -42,7 +46,8 @@ public class Bullet {
 			}
 		
 
-
+	
+	//Getters and Setters
 	public int getbX() {
 		return bx;
 	}
