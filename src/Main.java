@@ -1,7 +1,3 @@
-/Tuan
-Desmond
-	/
-
 import java.util.Scanner;
 
 public class Main {
@@ -44,152 +40,194 @@ public class Main {
           tuan.move(command);
           System.out.println(tuan);
     	
-          if (command.equals("left")) {  	            	
-          	moveY -= 1;
-          	board[moveX][moveY] = currentPlayerPosition;
-          	board = new char[a][b];
-        	currentPlayerPosition = 'M';
-        	for (int i = 0; i<a; i++) {
-        		for(int j =0;j<b;j++) {
-        			board[i][j]='-';
-        	}
-        	}                                              
-        	board[moveX][moveY] = currentPlayerPosition;
-        	
-        		System.out.println("---------------------------------");
-        		for (int i=0;i<a;i++) {
-        			System.out.print("| ");    			
-        			for (int j = 0; j<b;j++) {
-        				System.out.print(board[i][j]+ " | ");
-        			}   			
-        			System.out.println();
-        			System.out.println("---------------------------------");
-        		}
+          if (command.equals("left")) {
+        	moveY -= 1;
+        	  if (moveY > 0 && moveY < b) {
+        		  board[moveX][moveY] = currentPlayerPosition;
+                	board = new char[a][b];
+              	currentPlayerPosition = 'M';
+              	for (int i = 0; i<a; i++) {
+              		for(int j =0;j<b;j++) {
+              			board[i][j]='-';
+              	}
+              	}                                              
+              	board[moveX][moveY] = currentPlayerPosition;
+              	
+              		System.out.println("---------------------------------");
+              		for (int i=0;i<a;i++) {
+              			System.out.print("| ");    			
+              			for (int j = 0; j<b;j++) {
+              				System.out.print(board[i][j]+ " | ");
+              			}   			
+              			System.out.println();
+              			System.out.println("---------------------------------");
+              		}
+        	  }
+        	  else {
+        		  System.out.println("out of bounds!");
+        		  moveY += 1;
+        	  }        	  	
           }
+          
           if (command.equals("right")) {
-          	moveY += 1;
-          	board[moveX][moveY] = currentPlayerPosition;
-        	board = new char[a][b];
-        	currentPlayerPosition = 'M';
-        	for (int i = 0; i<a; i++) {
-        		for(int j =0;j<b;j++) {
-        			board[i][j]='-';
-        	}
-        	}                                              
-        	board[moveX][moveY] = currentPlayerPosition;
-        	
-        		System.out.println("---------------------------------");
-        		for (int i=0;i<a;i++) {
-        			System.out.print("| ");    			
-        			for (int j = 0; j<b;j++) {
-        				System.out.print(board[i][j]+ " | ");
-        			}   			
-        			System.out.println();
-        			System.out.println("---------------------------------");
-        		}
+        	  moveY += 1;
+        	  if (moveY > 0 && moveY < b) {
+        		  board[moveX][moveY] = currentPlayerPosition;
+              	board = new char[a][b];
+              	currentPlayerPosition = 'M';
+              	for (int i = 0; i<a; i++) {
+              		for(int j =0;j<b;j++) {
+              			board[i][j]='-';
+              	}
+              	}                                              
+              	board[moveX][moveY] = currentPlayerPosition;
+              	
+              		System.out.println("---------------------------------");
+              		for (int i=0;i<a;i++) {
+              			System.out.print("| ");    			
+              			for (int j = 0; j<b;j++) {
+              				System.out.print(board[i][j]+ " | ");
+              			}   			
+              			System.out.println();
+              			System.out.println("---------------------------------");
+              		}
+        	  }
+        	  else {
+        		  System.out.println("out of bounds!");
+        		  moveY -= 1;
+        	  }         	
           }
+          
           if (command.equals("up")) {
-          	moveX -= 1;        	
-          	board[moveX][moveY] = currentPlayerPosition;
-        	board = new char[a][b];
-        	currentPlayerPosition = 'M';
-        	for (int i = 0; i<a; i++) {
-        		for(int j =0;j<b;j++) {
-        			board[i][j]='-';
-        	}
-        	}                                              
-        	board[moveX][moveY] = currentPlayerPosition;
-        	
-        		System.out.println("---------------------------------");
-        		for (int i=0;i<a;i++) {
-        			System.out.print("| ");    			
-        			for (int j = 0; j<b;j++) {
-        				System.out.print(board[i][j]+ " | ");
-        			}   			
-        			System.out.println();
-        			System.out.println("---------------------------------");
-        		}
+        	  moveX -= 1;
+        	  if (moveX > 0 && moveX < b) {
+        		  board[moveX][moveY] = currentPlayerPosition;
+              	board = new char[a][b];
+              	currentPlayerPosition = 'M';
+              	for (int i = 0; i<a; i++) {
+              		for(int j =0;j<b;j++) {
+              			board[i][j]='-';
+              	}
+              	}                                              
+              	board[moveX][moveY] = currentPlayerPosition;
+              	
+              		System.out.println("---------------------------------");
+              		for (int i=0;i<a;i++) {
+              			System.out.print("| ");    			
+              			for (int j = 0; j<b;j++) {
+              				System.out.print(board[i][j]+ " | ");
+              			}   			
+              			System.out.println();
+              			System.out.println("---------------------------------");
+              		}
+        	  }
+        	  else {      	
+        		  System.out.println("out of bounds!");
+        		  moveX += 1;
+        	  }
+          	
           }
           
     	        while (command != ""){        
-    	            System.out.println("Please enter left, right, or up");  
-    	            command = input.nextLine();
-    	            tuan.move(command);
-    	            System.out.println(tuan);
-    	            
-    	            if (command.equals("left")) {  	            	
+    	        	  System.out.println("Please enter left, right or up");
+    	              command = input.nextLine();
+    	              tuan.move(command);
+    	              System.out.println(tuan);
+    	        	
+    	              if (command.equals("left")) {
     	            	moveY -= 1;
-    	            	board[moveX][moveY] = currentPlayerPosition;
-    	            	board = new char[a][b];
-    	            	currentPlayerPosition = 'M';
-    	            	for (int i = 0; i<a; i++) {
-    	            		for(int j =0;j<b;j++) {
-    	            			board[i][j]='-';
-    	            	}
-    	            	}                                              
-    	            	board[moveX][moveY] = currentPlayerPosition;
-    	            	
-    	            		System.out.println("---------------------------------");
-    	            		for (int i=0;i<a;i++) {
-    	            			System.out.print("| ");    			
-    	            			for (int j = 0; j<b;j++) {
-    	            				System.out.print(board[i][j]+ " | ");
-    	            			}   			
-    	            			System.out.println();
-    	            			System.out.println("---------------------------------");
-    	            		}
-    	            }
-    	            if (command.equals("right")) {
-    	            	moveY += 1;
-    	            	board[moveX][moveY] = currentPlayerPosition;
-    	            	board = new char[a][b];
-    	            	currentPlayerPosition = 'M';
-    	            	for (int i = 0; i<a; i++) {
-    	            		for(int j =0;j<b;j++) {
-    	            			board[i][j]='-';
-    	            	}
-    	            	}                                              
-    	            	board[moveX][moveY] = currentPlayerPosition;
-    	            	
-    	            		System.out.println("---------------------------------");
-    	            		for (int i=0;i<a;i++) {
-    	            			System.out.print("| ");    			
-    	            			for (int j = 0; j<b;j++) {
-    	            				System.out.print(board[i][j]+ " | ");
-    	            			}   			
-    	            			System.out.println();
-    	            			System.out.println("---------------------------------");
-    	            		}
-    	            }
-    	            if (command.equals("up")) {
-    	            	moveX -= 1;
-    	            	board[moveX][moveY] = currentPlayerPosition;
-    	            	board = new char[a][b];
-    	            	currentPlayerPosition = 'M';
-    	            	for (int i = 0; i<a; i++) {
-    	            		for(int j =0;j<b;j++) {
-    	            			board[i][j]='-';
-    	            	}
-    	            	}                                              
-    	            	board[moveX][moveY] = currentPlayerPosition;
-    	            	
-    	            		System.out.println("---------------------------------");
-    	            		for (int i=0;i<a;i++) {
-    	            			System.out.print("| ");    			
-    	            			for (int j = 0; j<b;j++) {
-    	            				System.out.print(board[i][j]+ " | ");
-    	            			}   			
-    	            			System.out.println();
-    	            			System.out.println("---------------------------------");
-    	            		}
-    	            }
-    	        
+    	            	  if (moveY > 0 && moveY < b) {
+    	            		  board[moveX][moveY] = currentPlayerPosition;
+    	                    	board = new char[a][b];
+    	                  	currentPlayerPosition = 'M';
+    	                  	for (int i = 0; i<a; i++) {
+    	                  		for(int j =0;j<b;j++) {
+    	                  			board[i][j]='-';
+    	                  	}
+    	                  	}                                              
+    	                  	board[moveX][moveY] = currentPlayerPosition;
+    	                  	
+    	                  		System.out.println("---------------------------------");
+    	                  		for (int i=0;i<a;i++) {
+    	                  			System.out.print("| ");    			
+    	                  			for (int j = 0; j<b;j++) {
+    	                  				System.out.print(board[i][j]+ " | ");
+    	                  			}   			
+    	                  			System.out.println();
+    	                  			System.out.println("---------------------------------");
+    	                  		}
+    	            	  }
+    	            	  else {
+    	            		  System.out.println("out of bounds!");
+    	            		  moveY += 1;
+    	            	  }        	  	
+    	              }
+    	              
+    	              if (command.equals("right")) {
+    	            	  moveY += 1;
+    	            	  if (moveY > 0 && moveY < b) {
+    	            		  board[moveX][moveY] = currentPlayerPosition;
+    	                  	board = new char[a][b];
+    	                  	currentPlayerPosition = 'M';
+    	                  	for (int i = 0; i<a; i++) {
+    	                  		for(int j =0;j<b;j++) {
+    	                  			board[i][j]='-';
+    	                  	}
+    	                  	}                                              
+    	                  	board[moveX][moveY] = currentPlayerPosition;
+    	                  	
+    	                  		System.out.println("---------------------------------");
+    	                  		for (int i=0;i<a;i++) {
+    	                  			System.out.print("| ");    			
+    	                  			for (int j = 0; j<b;j++) {
+    	                  				System.out.print(board[i][j]+ " | ");
+    	                  			}   			
+    	                  			System.out.println();
+    	                  			System.out.println("---------------------------------");
+    	                  		}
+    	            	  }
+    	            	  else {
+    	            		  System.out.println("out of bounds!");
+    	            		  moveY -= 1;
+    	            	  }         	
+    	              }
+    	              
+    	              if (command.equals("up")) {
+    	            	  moveX -= 1;
+    	            	  if (moveX > 0 && moveX < b) {
+    	            		  board[moveX][moveY] = currentPlayerPosition;
+    	                  	board = new char[a][b];
+    	                  	currentPlayerPosition = 'M';
+    	                  	for (int i = 0; i<a; i++) {
+    	                  		for(int j =0;j<b;j++) {
+    	                  			board[i][j]='-';
+    	                  	}
+    	                  	}                                              
+    	                  	board[moveX][moveY] = currentPlayerPosition;
+    	                  	
+    	                  		System.out.println("---------------------------------");
+    	                  		for (int i=0;i<a;i++) {
+    	                  			System.out.print("| ");    			
+    	                  			for (int j = 0; j<b;j++) {
+    	                  				System.out.print(board[i][j]+ " | ");
+    	                  			}   			
+    	                  			System.out.println();
+    	                  			System.out.println("---------------------------------");
+    	                  		}
+    	            	  }
+    	            	  else {      	
+    	            		  System.out.println("out of bounds!");
+    	            		  moveX += 1;
+    	            	  }
+    	              	
+    	              }    	        
     	            tuanBullet.setBullet(tuan.getX(), tuan.getY());
     	            
     	            System.out.println("please enter shoot to shoot");
     	            bcommand = input.nextLine();
+    	            if (bcommand.equals("shoot")) {
     	            tuanBullet.shoot(bcommand, tuan.getX(), tuan.getY());
-    				System.out.println("bullet position is " + tuanBullet.getBulletList() );
+    				System.out.println("bullet position is " + tuanBullet.getBulletList() );}
     	        }
     	        //input.close();
     
