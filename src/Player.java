@@ -3,6 +3,7 @@ public class Player{
     private int y;
     private String name;
     private String input;
+   
 
     public Player(String name){
         this.name = name;
@@ -20,13 +21,15 @@ public class Player{
     public void move(String input){
 
         if(input.equals("up")) {
-            this.setPosition(this.x, this.y - 50);
+            this.setPosition(this.x, this.y - 1);
+            
         }
         else if(input.equals("right")){
-            this.setPosition(this.x+50,this.y);
+            this.setPosition(this.x+1,this.y);
+            
         }
         else if (input.equals("left")){
-            this.setPosition(this.x-50, this.y);
+            this.setPosition(this.x-1, this.y);
 
         }
     }
