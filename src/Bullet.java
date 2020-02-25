@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 //Shooting the bullet
-//Desmond and Muhammad
+//Desmond and Muhammad and Tuan
 public class Bullet {
-	private static final int WIDTH = 600;
+	private static final int WIDTH = 400;
 	private int bx;
 	private int by;
 	private String space;
