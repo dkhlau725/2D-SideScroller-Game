@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
 	private static char[][] board;
 	private static char currentPlayerPosition;
+	private static char shootbullet;
 
     public static void main(String args[]){
         Player tuan = new Player("Razeen");
@@ -15,14 +16,17 @@ public class Main {
     	int b = 8;
     	int moveX = 5;
     	int moveY = 0;
-    	
-		board = new char[a][b];
     	currentPlayerPosition = 'M';
+    	shootbullet = '>';
+    	
+    	//CREATE INITIAL BOARD
+		board = new char[a][b];
     	for (int i = 0; i<a; i++) {
     		for(int j =0;j<b;j++) {
     			board[i][j]='-';
-    	}
-    	}                                              
+    		}
+    	}  
+    	//ADD PLAYER
     	board[moveX][moveY] = currentPlayerPosition;
     	
     		System.out.println("---------------------------------");
@@ -40,16 +44,15 @@ public class Main {
           tuan.move(command);
           System.out.println(tuan);
     	
-          if (command.equals("left")) {
+          if (command.equalsIgnoreCase("left")) {
         	moveY -= 1;
-        	  if (moveY > 0 && moveY < b) {
+        	  if (moveY >= 0 && moveY < b) {
         		  board[moveX][moveY] = currentPlayerPosition;
                 	board = new char[a][b];
-              	currentPlayerPosition = 'M';
               	for (int i = 0; i<a; i++) {
               		for(int j =0;j<b;j++) {
               			board[i][j]='-';
-              	}
+              		}
               	}                                              
               	board[moveX][moveY] = currentPlayerPosition;
               	
@@ -65,20 +68,19 @@ public class Main {
         	  }
         	  else {
         		  System.out.println("out of bounds!");
-        		  moveY += 1;
+        		  //moveY += 1;
         	  }        	  	
           }
           
-          if (command.equals("right")) {
+          else if (command.equalsIgnoreCase("right")) {
         	  moveY += 1;
-        	  if (moveY > 0 && moveY < b) {
+        	  if (moveY >= 0 && moveY < b) {
         		  board[moveX][moveY] = currentPlayerPosition;
               	board = new char[a][b];
-              	currentPlayerPosition = 'M';
               	for (int i = 0; i<a; i++) {
               		for(int j =0;j<b;j++) {
               			board[i][j]='-';
-              	}
+              		}
               	}                                              
               	board[moveX][moveY] = currentPlayerPosition;
               	
@@ -94,20 +96,19 @@ public class Main {
         	  }
         	  else {
         		  System.out.println("out of bounds!");
-        		  moveY -= 1;
+        		  //moveY -= 1;
         	  }         	
           }
           
-          if (command.equals("up")) {
+          else if (command.equalsIgnoreCase("up")) {
         	  moveX -= 1;
-        	  if (moveX > 0 && moveX < b) {
+        	  if (moveX >= 0 && moveX < b) {
         		  board[moveX][moveY] = currentPlayerPosition;
               	board = new char[a][b];
-              	currentPlayerPosition = 'M';
               	for (int i = 0; i<a; i++) {
               		for(int j =0;j<b;j++) {
               			board[i][j]='-';
-              	}
+              		}
               	}                                              
               	board[moveX][moveY] = currentPlayerPosition;
               	
@@ -123,9 +124,13 @@ public class Main {
         	  }
         	  else {      	
         		  System.out.println("out of bounds!");
-        		  moveX += 1;
+        		  //moveX += 1;
         	  }
           	
+          }
+          
+          else {
+        	  System.out.println("invalid movement!");
           }
           
     	        while (command != ""){        
@@ -134,16 +139,15 @@ public class Main {
     	              tuan.move(command);
     	              System.out.println(tuan);
     	        	
-    	              if (command.equals("left")) {
+    	              if (command.equalsIgnoreCase("left")) {
     	            	moveY -= 1;
-    	            	  if (moveY > 0 && moveY < b) {
+    	            	  if (moveY >= 0 && moveY < b) {
     	            		  board[moveX][moveY] = currentPlayerPosition;
     	                    	board = new char[a][b];
-    	                  	currentPlayerPosition = 'M';
     	                  	for (int i = 0; i<a; i++) {
     	                  		for(int j =0;j<b;j++) {
     	                  			board[i][j]='-';
-    	                  	}
+    	                  		}
     	                  	}                                              
     	                  	board[moveX][moveY] = currentPlayerPosition;
     	                  	
@@ -159,20 +163,19 @@ public class Main {
     	            	  }
     	            	  else {
     	            		  System.out.println("out of bounds!");
-    	            		  moveY += 1;
+    	            		  //moveY += 1;
     	            	  }        	  	
     	              }
     	              
-    	              if (command.equals("right")) {
+    	              else if (command.equalsIgnoreCase("right")) {
     	            	  moveY += 1;
-    	            	  if (moveY > 0 && moveY < b) {
+    	            	  if (moveY >= 0 && moveY < b) {
     	            		  board[moveX][moveY] = currentPlayerPosition;
     	                  	board = new char[a][b];
-    	                  	currentPlayerPosition = 'M';
     	                  	for (int i = 0; i<a; i++) {
     	                  		for(int j =0;j<b;j++) {
     	                  			board[i][j]='-';
-    	                  	}
+    	                  		}
     	                  	}                                              
     	                  	board[moveX][moveY] = currentPlayerPosition;
     	                  	
@@ -188,20 +191,19 @@ public class Main {
     	            	  }
     	            	  else {
     	            		  System.out.println("out of bounds!");
-    	            		  moveY -= 1;
+    	            		  //moveY -= 1;
     	            	  }         	
     	              }
     	              
-    	              if (command.equals("up")) {
+    	              else if (command.equalsIgnoreCase("up")) {
     	            	  moveX -= 1;
-    	            	  if (moveX > 0 && moveX < b) {
+    	            	  if (moveX >= 0 && moveX < b) {
     	            		  board[moveX][moveY] = currentPlayerPosition;
     	                  	board = new char[a][b];
-    	                  	currentPlayerPosition = 'M';
     	                  	for (int i = 0; i<a; i++) {
     	                  		for(int j =0;j<b;j++) {
     	                  			board[i][j]='-';
-    	                  	}
+    	                  		}
     	                  	}                                              
     	                  	board[moveX][moveY] = currentPlayerPosition;
     	                  	
@@ -217,66 +219,51 @@ public class Main {
     	            	  }
     	            	  else {      	
     	            		  System.out.println("out of bounds!");
-    	            		  moveX += 1;
+    	            		  //moveX += 1;
     	            	  }
     	              	
-    	              }    	        
+    	              }
+    	              else {
+    	            	  System.out.println("invalid movement!");
+    	              }
+    	              
     	            tuanBullet.setBullet(tuan.getX(), tuan.getY());
     	            
     	            System.out.println("please enter shoot to shoot");
     	            bcommand = input.nextLine();
-    	            if (bcommand.equals("shoot")) {
-    	            tuanBullet.shoot(bcommand, tuan.getX(), tuan.getY());
-    				System.out.println("bullet position is " + tuanBullet.getBulletList() );}
+    	            
+    	            if (bcommand.equalsIgnoreCase("shoot")) {
+    	            	tuanBullet.shoot(bcommand, tuan.getX(), tuan.getY());
+    	            	System.out.println("bullet position is " + tuanBullet.getBulletList() );
+    				
+    				
+//    	            	for (int bullet = moveY; bullet < b; bullet++) {
+//    	            		board[moveX][bullet] = shootbullet;
+//    	            		board = new char[a][b];
+//    	                  	for (int i = 0; i<a; i++) {
+//    	                  		for(int j =0;j<b;j++) {
+//    	                  			board[i][j]='-';
+//    	                  	}
+//    	                  	}                 
+//    	                  	board[moveX][moveY] = currentPlayerPosition;
+//    	                  	board[moveX][bullet] = shootbullet;
+//    	                  	
+//    	                  		System.out.println("---------------------------------");
+//    	                  		for (int i=0;i<a;i++) {
+//    	                  			System.out.print("| ");    			
+//    	                  			for (int j = 0; j<b;j++) {
+//    	                  				System.out.print(board[i][j]+ " | ");
+//    	                  			}   			
+//    	                  			System.out.println();
+//    	                  			System.out.println("---------------------------------");
+//    	                  		}
+//    	            	}
+    				}
+    	            else {
+    	            	System.out.println("that's not how you spell shoot! try again later");
+    	            }
     	        }
-    	        //input.close();
-    
-    	
-    	
-    	
-    	         
-    	
-    	      
-    	    
-
-    	
-    		
-    			
-    	
-    		
-    	
-
-
-
-//        tuan.setPosition(0,300);
-//        tuanBullet.setBullet(tuan.getX() + 5, tuan.getY() - 5);
-//        
-//
-//        System.out.println("Please enter left, right or up");
-//        command = input.nextLine();
-//        tuan.move(command);
-//        System.out.println(tuan);
-//       
-//       
-//
-//
-//        while (command != ""){        
-//            System.out.println("Please enter left, right, or up");  
-//            command = input.nextLine();
-//            tuan.move(command);
-//            System.out.println(tuan);
-//            
-//            tuanBullet.setBullet(tuan.getX() + 5, tuan.getY() - 5);
-//            
-//            System.out.println("please enter shoot to shoot");
-//            bcommand = input.nextLine();
-//            tuanBullet.shoot(bcommand, tuan.getX()+5, tuan.getY()-5);
-//			System.out.println("bullet position is " + tuanBullet.getBulletList() );
-//        }
-//        input.close();
-//        
-//
-//        }
+    	        input.close();
     }
 }
 
