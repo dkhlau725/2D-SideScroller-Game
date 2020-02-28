@@ -1,15 +1,16 @@
 
+import java.lang.Math;
+
 public class Enemy {
 	
-    //enemy x position
-    private int x;
-
-    //enemy y position
-    private int y;
-
-    //bullet that hits the enemy
-    //private Bullet bullet;
-
+    //enemy x,y position
+    private int x=4,y=2;
+    
+    //bullet that hits the enemy TODO 
+    private Bullet bullet;
+    
+    //private int position;
+    
     //health of the enemy
     private int hp;
 
@@ -17,12 +18,11 @@ public class Enemy {
     private String enemy;
     
     //number of enemies alive TODO print number of enemies in console
-    public int enemies = 2;
+    private int enemies = 1;
 
     public Enemy(String enemy) {
     	this.enemy = enemy;
     }
-    
    
     //setting an enemy's position on the map
     public void setEnemyPos(int x, int y) {
@@ -31,55 +31,80 @@ public class Enemy {
         System.out.println("the enemies position is"+ ""+ x+ ""+ y);
     }
     
-    //setting the enemy's health to 100
+    //setting the enemy's health to 100 
     public int setEnemyHp(int hp) {
         hp = this.hp;
-        hp = 100;
         return hp;
     }
     
-    //reducing enemy hp by 25 each time bullet hits the enemy
-    public void reduceEnemyHp(int bx, int by, int hp)
+    //reducing enemy hp each time bullet hits the enemy 
+    public void reduceEnemyHp(int by, int hp)
     {
-        if(bx == this.x && by == this.y) 
+    	// if bullet is on the same y-level as enemy then enemy takes damage 
+        if(by == this.y) 
         {
-            setEnemyHp(hp - 25);
+            setEnemyHp(hp - 1);
         }
     }
     
-    public void enemy1() {
-    	hp = setEnemyHp(50);
-    	System.out.println("enemy1 hp is" + this.hp);
-    }
-    //constantly moves enemies in small squares while they are alive (hp != 0) TODO switch to random movement
-    public void moveEnemy() 
+    // checks if enemy is dead if 
+    public boolean enemyIsDead()
     {
-        while (setEnemyHp(hp) != 0) 
-        {
-        setEnemyPos(x+5, y);
-        setEnemyPos(x,y-5);
-        setEnemyPos(x-5, y);
-        setEnemyPos(x,y+5);
-        }
+    	// if no enemies died then return false and nothing happens
+    	if (setEnemyHp(hp) != 0) {
+    		return false;
+    
+    	// if enemy is dead the amount of enemies left on the level is reduced by 1
+    	}else{
+    		enemies -= 1;
+    		System.out.println("number of enemies alive " + enemies);
+    		return true;
+    	}
     }
+    
+    //moves an enemy to a starting position not too close to player spawn point TODO add random movement (left, right)
+    public int initialPositionOfEnemy(int x, int y)
+    {
+    	return x & y;
+    		
+    	//for the purpose of demo 1 
+    	 /* int max = 7;
+          * int min = 4;
+    	  *return position = setEnemyPos((int)Math.random() * (max - min + 1) + min,(int) Math.random() * (max - min + 1) + min);
+    	  */
+    }
+    
+    // creates 1 enemy with 1 health-point at a position (4,2) - used for testing purposes
+    public void enemy1() {
+    	this.hp = setEnemyHp(1);
+        initialPositionOfEnemy(4, 2);
+        while (enemyIsDead() == false) 
+    	{
+        	System.out.println("enemy is at " + this.x+","+this.y+"enemy1 hp is" + this.hp);
+    	}
+    }
+    
+    // not sure 
      public String toString()
          {
             return new String(this.enemy + " is at " + this.x+","+this.y);
          }
      
-     public int getX() {
+     // gets x of the enemy (does not do anything yet)
+     public int getEnemyX() {
             return x;
         }
-
-     public void setX(int x) {
+     // changes enemy's x position (does not do anything yet)
+     public void setEnemyX(int x) {
             this.x = x;
         }
-
-     public int getY() {
+     
+     // gets y of the enemy (does not do anything yet)
+     public int getEnemyY() {
           return y;
         }
-
-     public void setY(int y) {
+     // changes enemy's y position (does not do anything yet)
+     public void setEnemyY(int y) {
             this.y = y;
         }
 }
