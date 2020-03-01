@@ -1,13 +1,16 @@
+//Desmond, Tuan, Razeen.
 import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Main {
 	private static char[][] board;
 	private static char currentPlayerPosition;
 	private static char currentEnemyPosition;
-
+	
+// Create a new player visualize 3 sample enemies, take input for player movement and position of the bullet.
     public static void main(String args[]){
         Player tuan = new Player("Razeen");
         Bullet tuanBullet = new Bullet("bullet");
@@ -29,6 +32,7 @@ public class Main {
     	int enemy2Xpos = enemy.getEnemy2X();
     	int enemy2Ypos = enemy.getEnemy2Y();
     	Main test = new Main();
+// Create a list to append enemies' position
     	
     	List<Integer> enemyMovesX = new ArrayList<>(); 
     	enemyMovesX.add(enemyXpos);
@@ -61,7 +65,7 @@ public class Main {
     	enemy2MovesY.add(enemy2Ypos - 1);
     	
     	
-    	
+    	//create 2 pieces where 'M' represents player and 'E' represent enemy.
 		board = new char[a][b];
     	currentPlayerPosition = 'M';
     	currentEnemyPosition = 'E';
@@ -69,13 +73,14 @@ public class Main {
     		for(int j =0;j<b;j++) {
     			board[i][j]='-';
     		}
-    	}                                              
+    	}            
+	 // define the position of player and enemies on the board.
     	board[moveX][moveY] = currentPlayerPosition;
     	board[enemyXpos][enemyYpos] = currentEnemyPosition;
     	board[enemy1Xpos][enemy1Ypos] = currentEnemyPosition;
     	board[enemy2Xpos][enemy2Ypos] = currentEnemyPosition;
   
-    	
+    	//Create a board like a tictactoe board to show the sample position of objectives.
     		System.out.println("---------------------------------");
     		for (int i=0;i<a;i++) {
     			System.out.print("| ");    			
@@ -85,7 +90,7 @@ public class Main {
     			System.out.println();
     			System.out.println("---------------------------------");
     		}
-    		
+    	// take input as left,right or up to process the position of player in the board. If the player is out of bounds, it is going to print out of bound.
           System.out.println("Please enter left, right or up");
           command = input.nextLine();
           tuan.move(command);
@@ -129,9 +134,7 @@ public class Main {
           }
           
           if (command.equals("right")) {        	
-//        	  System.out.println(enemyMoves);
-//        	  System.out.println(enemy1Moves);
-//        	  System.out.println(enemy2Moves);
+
         	  
         		  moveY += 1;
         	 if (moveY >=0 && moveY < 8) {
@@ -375,7 +378,7 @@ public class Main {
 
 
     }
-    
+    // generate enemy position randomly.
 	public int getRandomElement(List<Integer> list) 
     { 
         Random rand = new Random(); 
