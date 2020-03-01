@@ -1,5 +1,5 @@
 //Desmond, Tuan, Razeen.
-// Notes: This version of code is only used to present the idea of the game in the first demo by printing out the position of the players, enemies, and the start point of the bullet. The idea in the actual code presented in the 2 demo will be the same.
+// Note: This version of code is only used to present the idea of the game in the first demo by printing out the position of the players, enemies, and the start point of the bullet. The idea in the actual code presented in the 2 demo will be the same.
 
 import java.util.Scanner;
 import java.util.Random;
