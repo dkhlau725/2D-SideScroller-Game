@@ -17,7 +17,7 @@ public class Enemy {
     
     //enemy2 x,y position
     
-    private int x2=1,y2=7;
+    private int x2=1,y2=6;
     
 
     //bullet that hits the enemy TODO 
@@ -305,4 +305,4 @@ public void setEnemy2Y(int y) {
       this.y2 = y;
 
   }
-
+}
