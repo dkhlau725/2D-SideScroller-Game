@@ -97,6 +97,7 @@ public class Player extends Super {
 	}
 	/*this method is used to create a box that represents the player before impletment the image
 	*/
+	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.RED);
 		g.fillRect(x, y, WIDTH, HEIGHT);
