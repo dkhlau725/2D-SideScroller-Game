@@ -1,4 +1,5 @@
 package game;
+
 import java.util.Random;
 
 import java.awt.Graphics;
@@ -16,7 +17,7 @@ public class Handler {
 	public LinkedList<Super> player = new LinkedList<Super>();
 	public LinkedList<Tile> object = new LinkedList<Tile>();
 	public LinkedList<Enemy0> enemy0 = new LinkedList<Enemy0>();
-	//public List<Integer>platform = new ArrayList<Integer>();
+	// public List<Integer>platform = new ArrayList<Integer>();
 	public int plat = 500;
 
 	public Handler() {
@@ -81,37 +82,34 @@ public class Handler {
 	public void removeEnemy0(Enemy0 e) {
 		enemy0.remove(e);
 	}
-	
-	public int getRandomPosition() 
-    { 
+
+	public int getRandomPosition() {
 		Random generate = new Random();
 		int low = 10;
 		int high = 100;
-		int result = generate.nextInt(high-low) + low;
+		int result = generate.nextInt(high - low) + low;
 		return result;
-    } 
-	
-	public int getRandomSize() 
-    { 
+	}
+
+	public int getRandomSize() {
 		Random generate = new Random();
 		int low = 64;
 		int high = 200;
-		int result = generate.nextInt(high-low) + low;
+		int result = generate.nextInt(high - low) + low;
 		return result;
-    } 
-	
+	}
+
 	public void makeLevel() {
 		// FLOOR
 		for (int i = 0; i < Main.WIDTH * Main.SCALE / 64 + 1; i++) {
 			addTile(new Wall(i * 64, Main.HEIGHT * Main.SCALE - 64, 64, 64, true, ID.wall, this));
-			}
 		}
-
+	}
 
 	public void addPlatform() {
 		for (int j = 0; j < Main.WIDTH * Main.SCALE / 64 + 1; j++) {
-			
-			addTile(new Wall(j*getRandomPosition(), this.plat-getRandomPosition(), 64, 64, true, ID.wall, this));
+
+			addTile(new Wall(j * getRandomPosition(), this.plat - getRandomPosition(), 64, 64, true, ID.wall, this));
 			this.plat -= getRandomPosition();
 		}
 	}
