@@ -1,4 +1,6 @@
 package game;
+/*Anh Tuan
+*/
 
 import java.util.Random;
 
@@ -11,19 +13,23 @@ import Super.Player;
 import Super.Super;
 import tile.Tile;
 import tile.Wall;
+/*Class Handler
+*This class used linkedlist to store position of player, object, and enemies. 
+*
+*/
 
-// this class use to update the movement of the character and background of the map using linkedlist to store value
 public class Handler {
 	public LinkedList<Super> player = new LinkedList<Super>();
 	public LinkedList<Tile> object = new LinkedList<Tile>();
 	public LinkedList<Enemy0> enemy0 = new LinkedList<Enemy0>();
-	// public List<Integer>platform = new ArrayList<Integer>();
 	public int plat = 500;
 
 	public Handler() {
 		makeLevel();
 	}
-
+/* This method render used to update graphic of player, objects, and enemy which used the data stored in the linkedlist.
+*It returns nothing
+*/
 	public void render(Graphics g) {
 		for (int a = 0; a < player.size(); a++) {
 			Super p = player.get(a);
@@ -40,7 +46,10 @@ public class Handler {
 			q.render(g);
 		}
 	}
-
+	
+/* This method update used to update movement of player, objects, and enemy which used the data stored in the linkedlist.
+*It returns nothing
+*/
 	public void update() {
 		for (int i = 0; i < player.size(); i++) {
 			Super p = player.get(i);
@@ -50,9 +59,7 @@ public class Handler {
 			Tile o = object.get(j);
 			o.update();
 		}
-//		for (Enemy0 e:enemy0) {
-//			e.update();
-//		}
+
 		for (int k = 0; k < enemy0.size(); k++) {
 			Enemy0 q = enemy0.get(k);
 			q.update();
@@ -82,7 +89,9 @@ public class Handler {
 	public void removeEnemy0(Enemy0 e) {
 		enemy0.remove(e);
 	}
-
+/*This are methods that still in the development stage and will be complete by demo3
+*These methods are ideally used to create a platform
+*/
 	public int getRandomPosition() {
 		Random generate = new Random();
 		int low = 10;
@@ -100,7 +109,6 @@ public class Handler {
 	}
 
 	public void makeLevel() {
-		// FLOOR
 		for (int i = 0; i < Main.WIDTH * Main.SCALE / 64 + 1; i++) {
 			addTile(new Wall(i * 64, Main.HEIGHT * Main.SCALE - 64, 64, 64, true, ID.wall, this));
 		}
