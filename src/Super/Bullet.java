@@ -23,6 +23,7 @@ public class Bullet extends Super {
 	*if facing = 0 then the player is facing to the left which means the bullet will go from the player's position to x=0
 	*if facing = 1 then the player is facing to the right which means the bullet will go from the player's position to x= width
 	*the velocity of the bullet is set |x| = 8
+	*return nothing
 	*/
 
 		switch (facing) {
@@ -38,6 +39,7 @@ public class Bullet extends Super {
 	*Loop through all the object in the linkedlist object. If the bullet is solid and if the bullet het the environment, the bullet get destroyed
 	*if the player jumping or falling, the bullet direction will be changed accordingly to the position of the player
 	* Loop through the linked list object again and heck if the bullet hit the enemy. If it does, destroy the enemy.
+	*return nothing
 	*/
 
 	@Override
@@ -94,6 +96,7 @@ public class Bullet extends Super {
 	}
 
 	/* Create a sample bullet before implement real image
+	*return nothing
 		*/
 	public void render(Graphics g) {
 		g.setColor(Color.YELLOW);
