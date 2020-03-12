@@ -98,6 +98,7 @@ public class Bullet extends Super {
 	/* Create a sample bullet before implement real image
 	*return nothing
 		*/
+	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.YELLOW);
 		g.fillRect(x, y, WIDTH, HEIGHT);
