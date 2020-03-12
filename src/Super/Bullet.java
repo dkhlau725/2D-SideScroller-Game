@@ -5,7 +5,6 @@ import java.awt.Graphics;
 
 import game.Handler;
 import game.ID;
-//import jdk.internal.org.objectweb.asm.Handle;
 import tile.Tile;
 
 public class Bullet extends Super {
