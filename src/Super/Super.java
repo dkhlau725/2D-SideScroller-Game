@@ -5,7 +5,11 @@ import java.awt.Rectangle;
 
 import game.Handler;
 import game.ID;
-
+/*class super
+*This class use to represents all the categories related to the player.
+*It contains these following variables: the coordinates x,y of the player, Screen Coordinates WIDTH/HEIGHT, boolean s to check the solidity, ID to check ID of the 
+*player and handler to append the information into a linkedlist to update it.
+*/
 public abstract class Super {
 	public int x;
 	public int y;
@@ -31,8 +35,14 @@ public abstract class Super {
 		setHandler(handler);
 		
 	}
-
+	/* The method update used to update the position of the player.
+	* It returns nothing
+	*/
 	public abstract void update();
+	
+	/*Method render used to update the graphic of the player
+	*It returns nothing
+	*/
 
 	public abstract void render(Graphics g);
 	
