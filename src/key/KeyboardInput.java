@@ -10,8 +10,10 @@ import game.Handler;
 import tile.Tile;
 
 public class KeyboardInput implements KeyListener {
-	private boolean Fire;
+	private boolean Fire;	//varabile to make bullet shoot one at a time
+	
 
+	//check what key is pressed
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		for (int i = 0; i < Main.handler.player.size(); i++) {
@@ -34,7 +36,7 @@ public class KeyboardInput implements KeyListener {
 			}
 		}
 	}
-
+	//check what key is pressed and what happends
 	public void keyPressed(KeyEvent e) {
 
 		int key = e.getKeyCode();
@@ -42,14 +44,14 @@ public class KeyboardInput implements KeyListener {
 			Super s = Main.handler.player.get(i);
 			if (s.getId() == ID.player) {
 				switch (key) {
-				case KeyEvent.VK_W:
+				case KeyEvent.VK_W:	//when the player jumps
 					
-					Main.handler.addPlatform();
+					Main.handler.addPlatform();	//platforms appear
 					
 					for (int a = 0; a < Main.handler.object.size(); a++) {
 						Tile o = Main.handler.object.get(a);
 						if (o.isS()) {
-							if (s.getBoundsDown().intersects(s.getBounds())) {
+							if (s.getBoundsDown().intersects(s.getBounds())) { //checking the bounds
 								if (s.jumping == false) {
 									s.jumping = true;
 									s.falling = false;
@@ -62,22 +64,22 @@ public class KeyboardInput implements KeyListener {
 
 					}
 					break;
-				case KeyEvent.VK_A:
+				case KeyEvent.VK_A:	//movine left 
 					s.setVelocityX(-5);
 					s.facing = 0;
 					break;
-				case KeyEvent.VK_D:
+				case KeyEvent.VK_D:	//moving right
 					s.setVelocityX(5);
 					s.facing = 1;
 					break;
-				case KeyEvent.VK_SPACE:
+				case KeyEvent.VK_SPACE:	//shooting
 					System.out.println("nooooooo");
 					System.out.println(s.facing);
-					if (true == !Fire) {
+					if (true == !Fire) {	//making one bullet shoot per press of space
 						switch (s.facing) {
 						case 0: // facing left
 							// check the boolean true
-
+							//make bullet appear	
 							Main.handler.addSuper(new Bullet(s.getX() - 30, s.getY() + 12, 24, 24, ID.bullet, false,
 									Main.handler, s.facing));
 							keyReleased(e);
@@ -85,7 +87,7 @@ public class KeyboardInput implements KeyListener {
 
 							break;
 						case 1: // facing right
-
+							//make bullet appear
 							Main.handler.addSuper(new Bullet(s.getX() + s.getWIDTH(), s.getY() + 12, 24, 24, ID.bullet,
 									false, Main.handler, s.facing));
 							keyReleased(e);
