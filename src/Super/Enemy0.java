@@ -28,7 +28,9 @@ public class Enemy0 extends Super {
 	public Enemy0(int x, int y, int WIDTH, int HEIGHT, boolean s, ID id, Handler handler) {
 		super(x, y, WIDTH, HEIGHT, s, id, handler);
 	}
-
+	
+	//this method updates the position of the enemy 
+	// and checks if its on the screen
 	public void update() {
 		x += velX;
 		y += velY;
