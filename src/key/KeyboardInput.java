@@ -1,7 +1,6 @@
 package key;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import javafx.scene.input.KeyEvent;
 import Super.Bullet;
 import Super.Super;
 import game.ID;
@@ -9,49 +8,52 @@ import game.Main;
 import game.Handler;
 import tile.Tile;
 
-public class KeyboardInput implements KeyListener {
-	private boolean Fire;	//varabile to make bullet shoot one at a time
-	
+public class KeyboardInput {
+	private boolean Fire;
 
-	//check what key is pressed
-	public void keyReleased(KeyEvent e) {
-		int key = e.getKeyCode();
-		for (int i = 0; i < Main.handler.player.size(); i++) {
-			Super player = Main.handler.player.get(i);
+	public void keyReleased(KeyEvent e, Handler handler) {
+		String key = e.getCode().toString();
+		
+		for (int i = 0; i < handler.player.size(); i++) {
+			Super player = handler.player.get(i);
 			if (player.getId() == ID.player) {
 				switch (key) {
-				case KeyEvent.VK_W:
+				case "W":
 					player.setVelocityY(0);
 					break;
-				case KeyEvent.VK_A:
+				case "A":
 					player.setVelocityX(0);
 					break;
-				case KeyEvent.VK_D:
+				case "D":
 					player.setVelocityX(0);
 					break;
-				case KeyEvent.VK_SPACE:
+				case "SPACE":
 					Fire = false;
 					break;
 				}
 			}
 		}
 	}
-	//check what key is pressed and what happends
-	public void keyPressed(KeyEvent e) {
 
-		int key = e.getKeyCode();
-		for (int i = 0; i < Main.handler.player.size(); i++) {
-			Super s = Main.handler.player.get(i);
+	public void keyPressed(KeyEvent e, Handler handler) {
+		
+		String key = e.getCode().toString();
+		
+		System.out.println(handler.player.size());
+		
+		for (int i = 0; i < handler.player.size(); i++) {
+			Super s = handler.player.get(i);
+			System.out.println(key);
 			if (s.getId() == ID.player) {
 				switch (key) {
-				case KeyEvent.VK_W:	//when the player jumps
+				case "W":
 					
-					Main.handler.addPlatform();	//platforms appear
+				//	handler.addPlatform();
 					
-					for (int a = 0; a < Main.handler.object.size(); a++) {
-						Tile o = Main.handler.object.get(a);
+					for (int a = 0; a < handler.object.size(); a++) {
+						Tile o = handler.object.get(a);
 						if (o.isS()) {
-							if (s.getBoundsDown().intersects(s.getBounds())) { //checking the bounds
+							if (s.getBoundsDown().intersects(s.getBounds())) {
 								if (s.jumping == false) {
 									s.jumping = true;
 									s.falling = false;
@@ -64,33 +66,33 @@ public class KeyboardInput implements KeyListener {
 
 					}
 					break;
-				case KeyEvent.VK_A:	//movine left 
+				case "A":
 					s.setVelocityX(-5);
 					s.facing = 0;
 					break;
-				case KeyEvent.VK_D:	//moving right
+				case "D":
 					s.setVelocityX(5);
 					s.facing = 1;
 					break;
-				case KeyEvent.VK_SPACE:	//shooting
+				case "SPACE":
 					System.out.println("nooooooo");
 					System.out.println(s.facing);
-					if (true == !Fire) {	//making one bullet shoot per press of space
+					if (true == !Fire) {
 						switch (s.facing) {
 						case 0: // facing left
 							// check the boolean true
-							//make bullet appear	
-							Main.handler.addSuper(new Bullet(s.getX() - 30, s.getY() + 12, 24, 24, ID.bullet, false,
-									Main.handler, s.facing));
-							keyReleased(e);
+
+							handler.addSuper(new Bullet(s.getX() - 30, s.getY() + 12, 24, 24, ID.bullet, false,
+									handler, s.facing));
+							keyReleased(e, handler);
 							Fire = true;
 
 							break;
 						case 1: // facing right
-							//make bullet appear
-							Main.handler.addSuper(new Bullet(s.getX() + s.getWIDTH(), s.getY() + 12, 24, 24, ID.bullet,
-									false, Main.handler, s.facing));
-							keyReleased(e);
+
+							handler.addSuper(new Bullet(s.getX() + s.getWIDTH(), s.getY() + 12, 24, 24, ID.bullet,
+									false, handler, s.facing));
+							keyReleased(e, handler);
 							Fire = true;
 							break;
 						}
