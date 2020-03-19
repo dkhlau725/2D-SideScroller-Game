@@ -28,9 +28,7 @@ public class Enemy0 extends Super {
 	public Enemy0(int x, int y, int WIDTH, int HEIGHT, boolean s, ID id, Handler handler) {
 		super(x, y, WIDTH, HEIGHT, s, id, handler);
 	}
-	
-	//this method updates the position of the enemy 
-	// and checks if its on the screen
+
 	public void update() {
 		x += velX;
 		y += velY;
@@ -67,17 +65,39 @@ public class Enemy0 extends Super {
 			}
 			// if enemy collides with player remove player
 			for (Super play : handler.player) {
-				// moveTowardsPlayer();
-				if (play.s == false)
+				if (play.s == false) {
 					break;
+				}
 				if (play.getId() == ID.player) {
-					if (getBounds().intersects(play.getBounds())) {
+					if (getBoundsUp().intersects(play.getBounds())) {
+					//	setVelY(0);
+					//	y = play.getY() + play.HEIGHT;
 						play.death();
 						break;
+						}
+					if (getBoundsDown().intersects(play.getBounds())) {
+					//	setVelY(0);
+					//	y = play.getY() - play.HEIGHT;
+						play.death();
+						break;
+						}
+					if (getBoundsLeft().intersects(play.getBounds())) {
+					//	setVelX(0);
+					//	x = play.getX() + play.WIDTH;
+						play.death();
+						break;
+						}
+					if (getBoundsRight().intersects(play.getBounds())) {
+					//	setVelX(0);
+					//	x = play.getX() - play.WIDTH;
+						play.death();
+						break;
+						}
 					}
 
 				}
-			}
+			
+			
 		}
 
 	}
