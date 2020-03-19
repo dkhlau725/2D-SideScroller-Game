@@ -7,6 +7,7 @@ import java.util.Random;
 import java.awt.Graphics;
 
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 import Super.Enemy0;
 import Super.Player;
@@ -19,9 +20,9 @@ import tile.Wall;
 */
 
 public class Handler {
-	public LinkedList<Super> player = new LinkedList<Super>();
-	public LinkedList<Tile> object = new LinkedList<Tile>();
-	public LinkedList<Enemy0> enemy0 = new LinkedList<Enemy0>();
+	public ArrayList<Super> player = new ArrayList<Super>();
+	public ArrayList<Tile> object = new ArrayList<Tile>();
+	public ArrayList<Enemy0> enemy0 = new ArrayList<Enemy0>();
 	public int plat = 500;
 
 	public Handler() {
