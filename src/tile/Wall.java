@@ -18,7 +18,5 @@ public class Wall extends Tile{
 	public void render(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(x, y, WIDTH, HEIGHT);		
-	}
-
-	
+	}	
 }
