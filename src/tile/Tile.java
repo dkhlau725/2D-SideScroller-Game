@@ -2,7 +2,9 @@ package tile;
 /*Anh Tuan
 */
 import java.awt.Graphics;
-import java.awt.Rectangle;
+
+import javafx.geometry.Bounds;
+import javafx.scene.shape.Rectangle;
 
 import game.Handler;
 import game.ID;
@@ -112,8 +114,8 @@ public abstract class Tile {
 		this.velocityY = velocityY;
 	}
 
-	public Rectangle getBounds(){
-		return new Rectangle(getX(), getY(), WIDTH, HEIGHT);
+	public Bounds getBounds(){
+		return (new Rectangle(getX(), getY(), WIDTH, HEIGHT)).getBoundsInParent();
 	}
 }
 
