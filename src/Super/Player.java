@@ -77,6 +77,29 @@ public class Player extends Super {
 				}
 			}
 		}
+		
+//		for (Enemy0 enem : handler.enemy0) {
+//			if (enem.s == false) {
+//				break;
+//			}
+//			if (enem.getId() == ID.Enemy0) {
+//				if (getBoundsUp().intersects(enem.getBounds())) {
+//						death();
+//					}
+//				if (getBoundsDown().intersects(enem.getBounds())) {
+//					death();
+//
+//					}
+//				if (getBoundsLeft().intersects(enem.getBounds())) {
+//					death();
+//					}
+//				if (getBoundsRight().intersects(enem.getBounds())) {
+//					death();
+//					}
+//				}
+//
+//			}
+		
 
 		// Gravity
 		if (jumping == true) {
