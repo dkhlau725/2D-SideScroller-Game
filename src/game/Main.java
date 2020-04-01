@@ -1,115 +1,270 @@
 package game;
 
+import java.awt.Canvas; // allow  to display with our frame
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.scene.paint.Color;
-import javafx.scene.canvas.Canvas;
-import javafx.geometry.Dimension2D;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.application.Platform;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
-import Super.Enemy0;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame; //library to create a window :) 
+
+import Super.Enemy;
 import Super.Player;
 import Super.Super;
+import graphics.Menu;
+import graphics.Sprite;
+import graphics.SpriteSheet;
 import key.KeyboardInput;
+import key.MouseInput;
 
-public class Main extends Application {
-	
+public class Main extends Canvas implements Runnable {
+	// set screen resolution as 800x600 and the scale as 3 :) name of the game will
+	// be decided later so let set it random
 	public static final int WIDTH = 270;
 	public static final int HEIGHT = WIDTH / 14 * 10;
 	public static final int SCALE = 4;
-	public Handler handler;
-	public KeyboardInput key;
-	public Player player;
-	public Canvas canvas;
-	public Enemy0 enemy0;
+	public static final String name = "Scrolling Shooting Game"; // title of the game
+	private Thread thread;
+	public static boolean rungame = false; // boolean to run game the game
+	public static Handler handler;
+	public static Camera cam;
+	public static KeyboardInput key;
+	public static MouseInput mouse;
+	public static Menu menu;
+	public static Player playerObj;
 	
-	 public void start(Stage stage) {
-		  try {	        	
-			  Group root = new Group();
-		      Scene scene = new Scene(root, frameWidth(), frameHeight(), Color.BLACK);
-		      this.canvas = new Canvas(frameWidth(), frameHeight());
-		      stage.setScene(scene);
-		      root.getChildren().add(canvas);
-		      
-		      handler = new Handler();
-		      
-		      this.player = new Player(300, 615, 64, 64, true, ID.player, handler);
-		      handler.addSuper(player);
-		      
-		      this.enemy0 = new Enemy0(500, 615, 55, 55, true, ID.Enemy0, handler);
-		      handler.addEnemy0(enemy0);
-		      
-		      key = new KeyboardInput();
-		      canvas.getScene().setOnKeyPressed(event -> key.keyPressed(event, handler));
-		      canvas.getScene().setOnKeyReleased(event -> key.keyReleased(event, handler));
-		      
-		      // create new timeline 
-		      //add keyframe of 20ms
-		        Timeline gameLoop = new Timeline();
-		        gameLoop.setCycleCount(Timeline.INDEFINITE);
-		        if(handler.player.size() == 0) {
-		        	  System.out.println("tuan");
-			    	  gameLoop.stop();
-			      }
+	public static SpriteSheet sheet;
+	public static Sprite platform;
+	public static Sprite spike;
+	public static Sprite player[] = new Sprite[14];
+	public static Sprite enemy[] = new Sprite[14];
+		
+	public static BufferedImage backgroundImage;
+	
+	public static boolean playingGame = false;
+	public static boolean endGame = false;
+	public static int endGameTime;
+	public static int countDown = 5;
+	
+	public static Sound jump;
+	public static Sound bird;
+	public static Sound gunshot;
+	public static Sound death;
+	public static Sound spikes;
+	public static Sound music;
 
-		      
-		        KeyFrame frame = new KeyFrame(new Duration(20), (event) -> this.render());
-		        gameLoop.getKeyFrames().add(frame);
-		        gameLoop.play();
-			  
-		      
-		      stage.setTitle("scrolling shooting game");
-		      stage.show();
-		      
-		      
-		  }
-		  catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	 }
-	 
-	 public static int frameWidth() {
-			return WIDTH * SCALE;
+	
+	// start the game
+	private synchronized void start() {
+		System.out.println("the game has been started");
+		if (rungame)
+			return;
+		rungame = true;
+		thread = new Thread(this, "Thread");
+		thread.start();
+	}
+
+	// end the game
+	private synchronized void end() {
+		if (rungame = false) {
+			return;
 		}
+		// using try and catch to get error when closing the game
+		try {
+			thread.join();
+		} catch (InterruptedException error) {
+			error.printStackTrace();
+		}
+	}
+
+	// RUN THE GAME
+	public void run() {
+		init();
+		requestFocus();
+		System.out.println("the game is running");
+		long previoustime = System.nanoTime(); // begin time in nanosec
+		long time = System.currentTimeMillis();// current time
+		double delta = 0.0; // different time to update
+		int frame = 0; // counter to update background
+		int update = 0;
+		double ns = 1000000000.0 / 60.0;
+		int counter = 0; // counter for update
+
+		// if the game is running, update activities of the game and background
+		while (rungame = true) {
+			long currenttime = System.nanoTime();
+			delta = delta + (currenttime - previoustime) / (ns);
+			previoustime = currenttime;
+			while (delta >= 1) {
+				update();
+				counter++;
+				delta--;
+			}
+			render();
+			frame++;
+			if (System.currentTimeMillis() - time > 1000) {
+				time += 1000;
+				frame = 0;
+				counter = 0;
+			}
+		}
+		end();
+	}
+
+	// initialize a box to be our character (temporary)
+	private void init() {
+		handler = new Handler();
+		menu = new Menu();
+		playerObj = new Player(300, 615, 64, 64, true, ID.player, handler);
+		cam = new Camera();
+		mouse = new MouseInput();
+		key = new KeyboardInput();
+		addKeyListener(key);
+		addMouseListener(mouse);
+		addMouseMotionListener(mouse);
+		
+		sheet = new SpriteSheet("/spritesheet.png");
+		platform = new Sprite(sheet,1,2);
+		spike = new Sprite(sheet,2,2);
+		
+		for (int i = 0; i < player.length; i++) {
+			player[i] = new Sprite(sheet, i+1, 3);
+		}
+		
+		for (int j = 0; j < enemy.length; j++) {
+			enemy[j] = new Sprite(sheet, j+1, 1);
+		}
+		
+		try {
+			backgroundImage = ImageIO.read(getClass().getResource("/background.png"));
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+		
+		jump = new Sound("/jump.wav");
+		gunshot = new Sound("/gunshot.wav");
+		bird = new Sound("/bird.wav");
+		death = new Sound("/death.wav");
+		spikes = new Sound("/spike.wav");
+		music = new Sound("/music.wav");
+	}
+
+	// update everything from handler function
+	public void update() {
+		if (playingGame == true) {
+			handler.update();
+		}
+
+		for (Super character : handler.player) {
+			if (character.getId() == ID.player) {
+				cam.updateCam(character);
+			}
+		}
+		
+		if (endGame == true) {
+			endGameTime ++;
+			if (endGameTime == 60 || endGameTime == 120 || endGameTime == 180 || endGameTime == 240 || endGameTime == 300) {
+				countDown--;
+			}
+		}
+		if (endGameTime >= 300) {
+			endGameTime = 0;
+			countDown = 5;
+			handler.deleteLevel();
+			handler.makeLevel();
+			handler.NEWSCORE = 0;
+			handler.SCORE = 0;
+			handler.plat = 100;
+			endGame = false;
+			music.play();
+		}
+	}
+	
+	
+	// update background and graphic
+	public void render() {
+		BufferStrategy background = getBufferStrategy();
+		if (background == null) {
+			createBufferStrategy(3);
+			return;
+		}
+
+		Graphics g = background.getDrawGraphics();	
+		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+		g.setColor(Color.RED);
+		g.setFont(new Font("Courier", Font.BOLD, 20));
+		
+		if (endGame == true) {
+			g.setColor(Color.BLACK);
+			g.setFont(new Font("Courier", Font.BOLD, 40));
+			g.drawString("GAME OVER!", frameWidth()/2 - 120, frameHeight()/2 - 100);
+			g.drawString("FINAL SCORE: " + handler.SCORE, frameWidth()/2 - 170, frameHeight()/2);
+			
+			g.setColor(Color.MAGENTA);
+			g.setFont(new Font("Courier", Font.BOLD, 20));
+			g.drawString("NEW GAME IN..." + countDown, frameWidth()/2 - 100, frameHeight()/2 + 150);
+			
+			if (handler.SCORE <= 5) {
+				g.setColor(Color.RED);
+				g.setFont(new Font("Courier", Font.BOLD, 30));
+				g.drawString("YOU SUCK!", frameWidth()/2 - 85, frameHeight()/2 + 100);
+			}
+			else if (handler.SCORE > 5 && handler.SCORE <= 10) {
+				g.setColor(Color.ORANGE);
+				g.setFont(new Font("Courier", Font.BOLD, 30));
+				g.drawString("NOT BAD!", frameWidth()/2 - 75, frameHeight()/2 + 100);
+			}
+			else {
+				g.setColor(Color.GREEN);
+				g.setFont(new Font("Courier", Font.BOLD, 30));
+				g.drawString("PRETTY GOOD!", frameWidth()/2 - 110, frameHeight()/2 + 100);
+			}
+		}
+		if (playingGame == true) {
+			g.translate(cam.getX(), cam.getY());
+			handler.render(g);
+		}
+		else if (playingGame == false) {
+			menu.render(g);
+		}
+		g.dispose();
+		background.show();
+	}
+
+	public static int frameWidth() {
+		return WIDTH * SCALE;
+	}
 
 	public static int frameHeight() {
-			return HEIGHT * SCALE;
-		}
+		return HEIGHT * SCALE;
+	}
+	
 
-	public void render() {
-		GraphicsContext context = this.canvas.getGraphicsContext2D();
-		context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
-		if (handler.player.size() != 0) {
-		for (int i = 0; i < handler.player.size(); i++) {
-			Super play = handler.player.get(i);
-			context.setFill(Color.RED);
-			context.fillRect(play.getX(), play.getY(), 64, 64);	
-			update();
-			}
-		}
-		
-		for (int e = 0; e < handler.enemy0.size(); e++) {
-			Enemy0 en = handler.enemy0.get(e);
-			context.setFill(Color.GREEN);
-			context.fillRect(en.getEnemyX(), en.getEnemyY(), 64, 64);
-			update();   	
-			}
+	public Main() {
+		Dimension size = new Dimension(frameWidth(), frameHeight());
+		setPreferredSize(size);
+		setMaximumSize(size);
+		setMinimumSize(size);
 	}
-	
-	
-	public void update() {
-        this.handler.update();
+
+	// main function to start/exit the window on click
+	public static void main(String args[]) {
+		Main game = new Main();
+		JFrame frame = new JFrame(name);
+		frame.add(game);
+		frame.pack();
+		frame.setResizable(false); // can't change the default game window
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		game.start();
+		
 	}
-	
-	 public static void main(String args[]) {
-		 launch(args);
-	 }
+
 }
