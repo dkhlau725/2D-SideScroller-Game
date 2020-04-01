@@ -1,6 +1,5 @@
 package tile;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -36,8 +35,6 @@ public class Tile {
 	}
 
 	public void render(Graphics g) {
-//		g.setColor(Color.WHITE);
-//		g.fillRect(x, y, WIDTH, HEIGHT);
 		g.drawImage(Main.platform.getBufferedImage(), x, y, WIDTH, HEIGHT, null);
 	}
 
@@ -80,6 +77,5 @@ public class Tile {
 	public Rectangle getBounds() {
 		return new Rectangle(getX(), getY(), WIDTH, HEIGHT);
 	}
-
 
 }

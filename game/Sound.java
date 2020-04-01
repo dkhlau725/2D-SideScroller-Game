@@ -12,21 +12,20 @@ public class Sound {
 	public Sound(String path) {
 		try {
 			AudioInputStream inputStream = AudioSystem.getAudioInputStream(getClass().getResource(path));
-			
+
 			AudioFormat baseFormat = inputStream.getFormat();
-			AudioFormat decodeFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(), 16, 
-					baseFormat.getChannels(), baseFormat.getChannels()*2, baseFormat.getSampleRate(), false);
-			
+			AudioFormat decodeFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(), 16,
+					baseFormat.getChannels(), baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
+
 			AudioInputStream decodeInputStream = AudioSystem.getAudioInputStream(decodeFormat, inputStream);
-			
+
 			clip = AudioSystem.getClip();
 			clip.open(decodeInputStream);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void play() {
 		if (clip == null) {
 			return;
@@ -35,12 +34,12 @@ public class Sound {
 		clip.setFramePosition(0);
 		clip.start();
 	}
-	
+
 	public void close() {
 		stop();
 		clip.close();
 	}
-	
+
 	public void stop() {
 		if (clip.isRunning()) {
 			clip.stop();

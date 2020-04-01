@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import game.Handler;
 import game.ID;
 import game.Main;
-//import jdk.internal.org.objectweb.asm.Handle;
 import tile.Tile;
 
 public class Bullet extends Super {
@@ -32,8 +31,7 @@ public class Bullet extends Super {
 			Tile t = handler.object.get(i);
 
 			if (t.isS()) { // if the tile is solid
-				if (bulletBoundsLeft().intersects(t.getBounds()) || bulletBoundsRight().intersects(t.getBounds())) { // if the														// bullet
-																												// hits																								// boundry
+				if (bulletBoundsLeft().intersects(t.getBounds()) || bulletBoundsRight().intersects(t.getBounds())) { // if bullet hits tile
 					death(); // bullet gets destroyed
 				}
 				if (getBoundsDown().intersects(t.getBounds())) {
@@ -75,9 +73,6 @@ public class Bullet extends Super {
 		}
 
 	}
-	// }
-
-	// }
 
 	public void render(Graphics g) {
 		g.setColor(Color.DARK_GRAY);

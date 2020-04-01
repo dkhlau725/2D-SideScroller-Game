@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame; //library to create a window :) 
 
-import Super.Enemy;
 import Super.Player;
 import Super.Super;
 import graphics.Menu;
@@ -37,20 +35,20 @@ public class Main extends Canvas implements Runnable {
 	public static MouseInput mouse;
 	public static Menu menu;
 	public static Player playerObj;
-	
+
 	public static SpriteSheet sheet;
 	public static Sprite platform;
 	public static Sprite spike;
 	public static Sprite player[] = new Sprite[14];
 	public static Sprite enemy[] = new Sprite[14];
-		
+
 	public static BufferedImage backgroundImage;
-	
+
 	public static boolean playingGame = false;
 	public static boolean endGame = false;
 	public static int endGameTime;
 	public static int countDown = 5;
-	
+
 	public static Sound jump;
 	public static Sound bird;
 	public static Sound gunshot;
@@ -58,10 +56,8 @@ public class Main extends Canvas implements Runnable {
 	public static Sound spikes;
 	public static Sound music;
 
-	
 	// start the game
 	private synchronized void start() {
-		System.out.println("the game has been started");
 		if (rungame)
 			return;
 		rungame = true;
@@ -86,7 +82,6 @@ public class Main extends Canvas implements Runnable {
 	public void run() {
 		init();
 		requestFocus();
-		System.out.println("the game is running");
 		long previoustime = System.nanoTime(); // begin time in nanosec
 		long time = System.currentTimeMillis();// current time
 		double delta = 0.0; // different time to update
@@ -116,7 +111,6 @@ public class Main extends Canvas implements Runnable {
 		end();
 	}
 
-	// initialize a box to be our character (temporary)
 	private void init() {
 		handler = new Handler();
 		menu = new Menu();
@@ -127,26 +121,25 @@ public class Main extends Canvas implements Runnable {
 		addKeyListener(key);
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
-		
+
 		sheet = new SpriteSheet("/spritesheet.png");
-		platform = new Sprite(sheet,1,2);
-		spike = new Sprite(sheet,2,2);
-		
+		platform = new Sprite(sheet, 1, 2);
+		spike = new Sprite(sheet, 2, 2);
+
 		for (int i = 0; i < player.length; i++) {
-			player[i] = new Sprite(sheet, i+1, 3);
+			player[i] = new Sprite(sheet, i + 1, 3);
 		}
-		
+
 		for (int j = 0; j < enemy.length; j++) {
-			enemy[j] = new Sprite(sheet, j+1, 1);
+			enemy[j] = new Sprite(sheet, j + 1, 1);
 		}
-		
+
 		try {
 			backgroundImage = ImageIO.read(getClass().getResource("/background.png"));
-		}
-		catch (IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		jump = new Sound("/jump.wav");
 		gunshot = new Sound("/gunshot.wav");
 		bird = new Sound("/bird.wav");
@@ -166,10 +159,11 @@ public class Main extends Canvas implements Runnable {
 				cam.updateCam(character);
 			}
 		}
-		
+
 		if (endGame == true) {
-			endGameTime ++;
-			if (endGameTime == 60 || endGameTime == 120 || endGameTime == 180 || endGameTime == 240 || endGameTime == 300) {
+			endGameTime++;
+			if (endGameTime == 60 || endGameTime == 120 || endGameTime == 180 || endGameTime == 240
+					|| endGameTime == 300) {
 				countDown--;
 			}
 		}
@@ -185,8 +179,7 @@ public class Main extends Canvas implements Runnable {
 			music.play();
 		}
 	}
-	
-	
+
 	// update background and graphic
 	public void render() {
 		BufferStrategy background = getBufferStrategy();
@@ -195,42 +188,39 @@ public class Main extends Canvas implements Runnable {
 			return;
 		}
 
-		Graphics g = background.getDrawGraphics();	
+		Graphics g = background.getDrawGraphics();
 		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
 		g.setColor(Color.RED);
 		g.setFont(new Font("Courier", Font.BOLD, 20));
-		
+
 		if (endGame == true) {
 			g.setColor(Color.BLACK);
 			g.setFont(new Font("Courier", Font.BOLD, 40));
-			g.drawString("GAME OVER!", frameWidth()/2 - 120, frameHeight()/2 - 100);
-			g.drawString("FINAL SCORE: " + handler.SCORE, frameWidth()/2 - 170, frameHeight()/2);
-			
+			g.drawString("GAME OVER!", frameWidth() / 2 - 120, frameHeight() / 2 - 100);
+			g.drawString("FINAL SCORE: " + handler.SCORE, frameWidth() / 2 - 170, frameHeight() / 2);
+
 			g.setColor(Color.MAGENTA);
 			g.setFont(new Font("Courier", Font.BOLD, 20));
-			g.drawString("NEW GAME IN..." + countDown, frameWidth()/2 - 100, frameHeight()/2 + 150);
-			
+			g.drawString("NEW GAME IN..." + countDown, frameWidth() / 2 - 100, frameHeight() / 2 + 150);
+
 			if (handler.SCORE <= 5) {
 				g.setColor(Color.RED);
 				g.setFont(new Font("Courier", Font.BOLD, 30));
-				g.drawString("YOU SUCK!", frameWidth()/2 - 85, frameHeight()/2 + 100);
-			}
-			else if (handler.SCORE > 5 && handler.SCORE <= 10) {
+				g.drawString("GET BETTER!", frameWidth() / 2 - 85, frameHeight() / 2 + 100);
+			} else if (handler.SCORE > 5 && handler.SCORE <= 10) {
 				g.setColor(Color.ORANGE);
 				g.setFont(new Font("Courier", Font.BOLD, 30));
-				g.drawString("NOT BAD!", frameWidth()/2 - 75, frameHeight()/2 + 100);
-			}
-			else {
+				g.drawString("NOT BAD!", frameWidth() / 2 - 75, frameHeight() / 2 + 100);
+			} else {
 				g.setColor(Color.GREEN);
 				g.setFont(new Font("Courier", Font.BOLD, 30));
-				g.drawString("PRETTY GOOD!", frameWidth()/2 - 110, frameHeight()/2 + 100);
+				g.drawString("PRETTY GOOD!", frameWidth() / 2 - 110, frameHeight() / 2 + 100);
 			}
 		}
 		if (playingGame == true) {
 			g.translate(cam.getX(), cam.getY());
 			handler.render(g);
-		}
-		else if (playingGame == false) {
+		} else if (playingGame == false) {
 			menu.render(g);
 		}
 		g.dispose();
@@ -244,7 +234,6 @@ public class Main extends Canvas implements Runnable {
 	public static int frameHeight() {
 		return HEIGHT * SCALE;
 	}
-	
 
 	public Main() {
 		Dimension size = new Dimension(frameWidth(), frameHeight());
@@ -264,7 +253,7 @@ public class Main extends Canvas implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		game.start();
-		
+
 	}
 
 }

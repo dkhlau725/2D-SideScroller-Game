@@ -8,13 +8,13 @@ import java.awt.Graphics;
 import game.Main;
 
 public class Button {
-	
+
 	public int x;
 	public int y;
 	public int WIDTH;
 	public int HEIGHT;
 	public String label;
-	
+
 	public Button(int x, int y, int WIDTH, int HEIGHT, String label) {
 		super();
 		this.x = x;
@@ -27,23 +27,22 @@ public class Button {
 	public void render(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Courier", Font.BOLD, 30));
-		
+
 		FontMetrics alignment = g.getFontMetrics();
 		int alignX = (getWIDTH() - alignment.stringWidth(getLabel())) / 2;
 		int alignY = (alignment.getAscent() + (getHEIGHT() - (alignment.getAscent() + alignment.getDescent())) / 2);
 		g.drawString(getLabel(), getX() + alignX, getY() + alignY);
 	}
-	
+
 	public void clickEvent() {
-		if (getLabel().toLowerCase().contains("start")){
+		if (getLabel().toLowerCase().contains("start")) {
 			Main.playingGame = true;
 			Main.music.play();
-		}
-		else if (getLabel().toLowerCase().contains("quit")) {
+		} else if (getLabel().toLowerCase().contains("quit")) {
 			System.exit(0);
 		}
 	}
-	
+
 	public int getX() {
 		return x;
 	}
@@ -83,6 +82,5 @@ public class Button {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	
-	
+
 }

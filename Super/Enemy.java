@@ -4,18 +4,10 @@ package Super;
 
 import game.Main;
 import tile.Tile;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
 import game.Handler;
 import game.ID;
 import Super.Player;
-
-/*this type of enemy just runs towards the player 
-* and damages them upon collision 
-* 
-* more enemy types will be implemented in demo 3, example: an enemy that shoots a player
-*/
 
 public class Enemy extends Super {
 
@@ -37,14 +29,14 @@ public class Enemy extends Super {
 			setVelX(2);
 			facing = 1;
 		}
-		
+
 		if (x + WIDTH >= 1080) {
 			setVelX(-2);
 			facing = 0;
 		}
 
 		// checking collision and out of bounds
-		for(int i=0;i<handler.object.size();i++) {
+		for (int i = 0; i < handler.object.size(); i++) {
 			Tile enviro = handler.object.get(i);
 			if (enviro.s == false)
 				break;
@@ -96,13 +88,13 @@ public class Enemy extends Super {
 		}
 
 	}
-	
+
 	// color and shape of the enemy
 	public void render(Graphics g) {
 		if (this.facing == 0) {
-			g.drawImage(Main.enemy[frame+7].getBufferedImage(), x, y, WIDTH, HEIGHT, null);
+			g.drawImage(Main.enemy[frame + 7].getBufferedImage(), x, y, WIDTH, HEIGHT, null);
 		}
-		//facing right
+		// facing right
 		else if (this.facing == 1) {
 			g.drawImage(Main.enemy[frame].getBufferedImage(), x, y, WIDTH, HEIGHT, null);
 		}

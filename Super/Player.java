@@ -1,27 +1,24 @@
 package Super;
 
-import game.Main;
-import graphics.Button;
-import tile.Tile;
-
-import java.awt.Color;
 import java.awt.Graphics;
 
+import game.Main;
+import graphics.Button;
 import game.Handler;
 import game.ID;
+import tile.Tile;
+
 
 public class Player extends Super {
 
 	private int frame = 0;
 	private int delay = 0;
 	public Button[] buttons;
-	
+
 	public Player(int x, int y, int WITDH, int HEIGHT, boolean s, ID id, Handler handler) {
 		super(x, y, WITDH, HEIGHT, s, id, handler);
-//		buttons = new Button[1];	
-//		buttons[0] = new Button(Main.frameWidth()-300, getY()-400, 100, 100, "RESTART");	
 	}
-	
+
 	public void update() {
 		x += velocityX;
 		y += velocityY;
@@ -33,7 +30,7 @@ public class Player extends Super {
 			y = 771 - HEIGHT;
 
 		// COLLISION DETECTION
-		for(int i=0;i<handler.object.size();i++) {
+		for (int i = 0; i < handler.object.size(); i++) {
 			Tile enviro = handler.object.get(i);
 			if (enviro.s == false)
 				break;
@@ -100,24 +97,19 @@ public class Player extends Super {
 			}
 			delay = 0;
 		}
-		
 
 	}
 
 	public void render(Graphics g) {
-		g.drawString("SCORE: " + handler.SCORE, getX()-10, getY()-5);
-//		buttons[0] = new Button(Main.frameWidth()-300, 400, 100, 100, "RESTART");	
-//		
-//		for (int i = 0; i < buttons.length; i++) {
-//			buttons[i].render(g);
-//		}
-//		//facing left
+		g.drawString("SCORE: " + handler.SCORE, getX() - 10, getY() - 5);
+
+		//facing left
 		if (facing == 0) {
 			g.drawImage(Main.player[frame].getBufferedImage(), x, y, WIDTH, HEIGHT, null);
 		}
-		//facing right
+		// facing right
 		else if (facing == 1) {
-			g.drawImage(Main.player[frame+7].getBufferedImage(), x, y, WIDTH, HEIGHT, null);
+			g.drawImage(Main.player[frame + 7].getBufferedImage(), x, y, WIDTH, HEIGHT, null);
 		}
 	}
 
