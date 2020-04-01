@@ -1,56 +1,45 @@
 package game;
-/*Anh Tuan
-*/
 
 import java.util.Random;
-
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
-
-import java.util.LinkedList;
 import java.util.ArrayList;
 
-import Super.Enemy0;
+import Super.Bullet;
+import Super.Enemy;
 import Super.Player;
+import Super.Spikes;
 import Super.Super;
 import tile.Tile;
-import tile.Wall;
-/*Class Handler
-*This class used linkedlist to store position of player, object, and enemies. 
-*
-*/
 
+
+// this class use to update the movement of the character and background of the map using linkedlist to store value
 public class Handler {
 	public ArrayList<Super> player = new ArrayList<Super>();
 	public ArrayList<Tile> object = new ArrayList<Tile>();
-	public ArrayList<Enemy0> enemy0 = new ArrayList<Enemy0>();
-	public int plat = 500;
-
+	public int plat = 100;
+	public int SCORE = 0;
+	public int NEWSCORE = 0;
+	
 	public Handler() {
 		makeLevel();
 	}
-/* This method render used to update graphic of player, objects, and enemy which used the data stored in the linkedlist.
-*It returns nothing
-*/
-	public void render(Graphics g) {
+
+	public void render(Graphics g) {		
+	
+		for (int b = 0; b < object.size(); b++) {
+			Tile o = object.get(b);
+			o.render(g);
+		}
 		for (int a = 0; a < player.size(); a++) {
 			Super p = player.get(a);
 			p.render(g);
 
 		}
-		for (int b = 0; b < object.size(); b++) {
-			Tile o = object.get(b);
-			o.render(g);
-		}
-
-		for (int c = 0; c < enemy0.size(); c++) {
-			Enemy0 q = enemy0.get(c);
-			q.render(g);
-		}
+		
 	}
-	
-/* This method update used to update movement of player, objects, and enemy which used the data stored in the linkedlist.
-*It returns nothing
-*/
+
 	public void update() {
 		for (int i = 0; i < player.size(); i++) {
 			Super p = player.get(i);
@@ -60,11 +49,12 @@ public class Handler {
 			Tile o = object.get(j);
 			o.update();
 		}
-
-		for (int k = 0; k < enemy0.size(); k++) {
-			Enemy0 q = enemy0.get(k);
-			q.update();
+		
+		if (NEWSCORE > SCORE) {
+			SCORE = NEWSCORE;
+			System.out.println("SCORE: " + SCORE);
 		}
+		
 	}
 
 	public void addSuper(Super p) {
@@ -82,45 +72,77 @@ public class Handler {
 	public void removeTile(Tile o) {
 		object.remove(o);
 	}
-
-	public void addEnemy0(Enemy0 e) {
-		enemy0.add(e);
-	}
-
-	public void removeEnemy0(Enemy0 e) {
-		enemy0.remove(e);
-	}
-/*This are methods that still in the development stage and will be complete by demo3
-*These methods are ideally used to create a platform
-*/
-	public int getRandomPosition() {
+	
+	public int getRandomPositionX() {
 		Random generate = new Random();
-		int low = 10;
-		int high = 100;
-		int result = generate.nextInt(high - low) + low;
+		int result = generate.nextInt(200) ;
 		return result;
+
+	}
+	
+	public int getRandomPositionY() {
+		Random generate = new Random();
+		int result = generate.nextInt(3) ;
+		if (result % 2==0) {			
+			return 225;		
+		}
+		else if(result % 2 ==1) {
+			return 200;
+		}
+		return 0;
+		
 	}
 
 	public int getRandomSize() {
 		Random generate = new Random();
-		int low = 64;
-		int high = 200;
-		int result = generate.nextInt(high - low) + low;
+		int result = generate.nextInt(150) + 100;
 		return result;
 	}
 
 	public void makeLevel() {
+		
+		
+		// FLOOR
 		for (int i = 0; i < Main.WIDTH * Main.SCALE / 64 + 1; i++) {
-			addTile(new Wall(i * 64, Main.HEIGHT * Main.SCALE - 64, 64, 64, true, ID.wall, this));
+			addSuper(new Spikes(i * 64, 1100, 64, 64, true, ID.tile, this));
 		}
+		
+		addSuper(new Player(300, 615, 64, 64, true, ID.player, this));
+		addSuper(new Enemy(700, 615, 55, 55, true, ID.Enemy, this));
+		
+		for (int i = 0; i < Main.WIDTH * Main.SCALE / 64 + 1; i++) {
+			addTile(new Tile(i * 64, Main.HEIGHT * Main.SCALE - 64, 64, 64, true, ID.tile, this));
+		}
+		for (int i = 12; i < Main.WIDTH * Main.SCALE / 64 + 1; i++) {
+			addTile(new Tile(i * 64, 500, 64, 64, true, ID.tile, this));
+			addTile(new Tile(i * 64, 100, 64, 64, true, ID.tile, this));
+		}
+		for (int i = 0; i < 7; i++) {
+			addTile(new Tile(i * 64, 300, 64, 64, true, ID.tile, this));
+		}	
+	}
+	
+	public void deleteLevel() {
+		player.clear();
+		object.clear();
 	}
 
 	public void addPlatform() {
-		for (int j = 0; j < Main.WIDTH * Main.SCALE / 64 + 1; j++) {
 
-			addTile(new Wall(j * getRandomPosition(), this.plat - getRandomPosition(), 64, 64, true, ID.wall, this));
-			this.plat -= getRandomPosition();
+		int randomY = getRandomPositionY();
+		int randomX = getRandomPositionX();
+
+			addTile(new Tile(0, this.plat - randomY, getRandomSize(), 64, true, ID.tile, this));
+			addSuper(new Enemy(0 + randomX, this.plat - randomY-70, 55, 55, true, ID.Enemy, this));
+			
+			addTile(new Tile(Main.frameWidth() - 200 - randomX, this.plat - randomY, Main.frameWidth()-getRandomSize(), 64, true, ID.tile, this));
+			addSuper(new Enemy(Main.frameWidth() - 200 + randomX, this.plat - randomY-70, 55, 55, true, ID.Enemy, this));
+			
+			addTile(new Tile(Main.frameWidth()/2 - 150, this.plat - randomY + 125, getRandomSize(), 64, true, ID.tile, this));
+			
+			this.plat -= randomY;
+
 		}
-	}
+	
 
 }
