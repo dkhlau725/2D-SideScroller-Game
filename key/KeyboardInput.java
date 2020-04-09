@@ -11,6 +11,7 @@ import tile.Tile;
 public class KeyboardInput implements KeyListener {
 	private boolean Fire;
 	private boolean hold;
+	public int counter=0;
 
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
@@ -50,9 +51,14 @@ public class KeyboardInput implements KeyListener {
 				switch (key) {
 
 				case KeyEvent.VK_W:
+					counter++;
+					//System.out.println(counter);
 					if (true == !hold) {
-						Main.handler.addPlatform();
-
+					
+						if (counter % 2==0) {
+							Main.handler.addPlatform();
+						}
+						
 						for (int a = 0; a < Main.handler.object.size(); a++) {
 							Tile o = Main.handler.object.get(a);
 
