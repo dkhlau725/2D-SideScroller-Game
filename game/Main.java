@@ -26,7 +26,7 @@ public class Main extends Canvas implements Runnable {
 	public static final int WIDTH = 270;
 	public static final int HEIGHT = WIDTH / 14 * 10; //(771)
 	public static final int SCALE = 4;
-	public static final String name = "Scrolling Shooting Game"; // title of the game
+	public static final String name = "Vhunter2D"; // title of the game
 	private Thread thread;
 	public static boolean rungame = false; // boolean to run game the game
 	public static Handler handler;
