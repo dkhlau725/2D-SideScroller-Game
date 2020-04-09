@@ -15,6 +15,8 @@ public class Enemy extends Super {
 	private int velY = 1;
 	private int frame = 0;
 	private int delay = 0;
+	private int speed = 2;
+	private int counter = 0;
 	Player player;
 
 	public Enemy(int x, int y, int WIDTH, int HEIGHT, boolean s, ID id, Handler handler) {
@@ -24,14 +26,24 @@ public class Enemy extends Super {
 	public void update() {
 		x += velX;
 		y += velY;
-
+		
+		counter++;
+		
+		if (counter % 150 == 0) {
+			speed++;
+		}
+		
+		if (speed > 10) {
+			speed = 2;
+		}
+		
 		if (x <= 0) {
-			setVelX(2);
+			setVelX(speed);
 			facing = 1;
 		}
 
 		if (x + WIDTH >= 1080) {
-			setVelX(-2);
+			setVelX(-speed);
 			facing = 0;
 		}
 
@@ -50,13 +62,13 @@ public class Enemy extends Super {
 				}
 
 				if (getBoundsLeft().intersects(enviro.getBounds())) {
-					setVelX(2);
+					setVelX(speed);
 					facing = 1;
 					x = enviro.getX() + enviro.WIDTH;
 				}
 
 				if (getBoundsRight().intersects(enviro.getBounds())) {
-					setVelX(-2);
+					setVelX(-speed);
 					facing = 0;
 					x = enviro.getX() - WIDTH;
 				}
