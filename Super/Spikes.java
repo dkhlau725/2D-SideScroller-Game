@@ -9,7 +9,8 @@ import tile.Tile;
 
 public class Spikes extends Super {
 
-	public int velocityY = -1;
+	public int velocityY = -2;
+
 
 	public Spikes(int x, int y, int WIDTH, int HEIGHT, boolean s, ID id, Handler handler) {
 		super(x, y, WIDTH, HEIGHT, s, id, handler);
@@ -18,15 +19,21 @@ public class Spikes extends Super {
 	public void update() {
 		if (handler.SCORE < 10) {
 			y += velocityY;
+			
+			
 		} else if (handler.SCORE < 15) {
-			setVelocityY(-2);
-			y += velocityY;
-		} else if (handler.NEWSCORE < 20) {
 			setVelocityY(-3);
 			y += velocityY;
-		} else {
+
+			
+		} else if (handler.NEWSCORE < 20) {
 			setVelocityY(-4);
 			y += velocityY;
+
+		} else {
+			setVelocityY(-5);
+			y += velocityY;
+
 		}
 
 		for (int i = 0; i < handler.object.size(); i++) {
