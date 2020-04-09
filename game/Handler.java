@@ -15,9 +15,12 @@ public class Handler {
 	public ArrayList<Super> player = new ArrayList<Super>();
 	public ArrayList<Tile> object = new ArrayList<Tile>();
 	public int plat = 100;
+	public int platMax = -1000;
 	public int SCORE = 0;
 	public int NEWSCORE = 0;
 
+	public int counter = 0;
+	
 	public Handler() {
 		makeLevel();
 	}
@@ -127,6 +130,7 @@ public class Handler {
 		addTile(new Tile(0, this.plat - randomY, getRandomSize(), 64, true, ID.tile, this));
 		addSuper(new Enemy(0 + randomX, this.plat - randomY - 70, 55, 55, true, ID.Enemy, this));
 
+		
 		addTile(new Tile(Main.frameWidth() - 200 - randomX, this.plat - randomY, Main.frameWidth() - getRandomSize(),
 				64, true, ID.tile, this));
 		addSuper(new Enemy(Main.frameWidth() - 200 + randomX, this.plat - randomY - 70, 55, 55, true, ID.Enemy, this));
@@ -135,7 +139,8 @@ public class Handler {
 				this));
 
 		this.plat -= randomY;
-
+		counter+=4;
+		System.out.println("counter=" + counter);
 	}
 
 }
