@@ -202,12 +202,12 @@ public class Main extends Canvas implements Runnable {
 
 			g.setColor(Color.MAGENTA);
 			g.setFont(new Font("Courier", Font.BOLD, 20));
-			g.drawString("NEW GAME IN..." + countDown, frameWidth() / 2 - 100, frameHeight() / 2 + 150);
+			g.drawString("NEW GAME IN..." + countDown, frameWidth() / 2 - 95, frameHeight() / 2 + 150);
 
 			if (handler.SCORE <= 5) {
 				g.setColor(Color.RED);
 				g.setFont(new Font("Courier", Font.BOLD, 30));
-				g.drawString("GET BETTER!", frameWidth() / 2 - 85, frameHeight() / 2 + 100);
+				g.drawString("GET BETTER!", frameWidth() / 2 - 95, frameHeight() / 2 + 100);
 			} else if (handler.SCORE > 5 && handler.SCORE <= 10) {
 				g.setColor(Color.ORANGE);
 				g.setFont(new Font("Courier", Font.BOLD, 30));
